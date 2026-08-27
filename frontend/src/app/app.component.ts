@@ -145,6 +145,35 @@ export class AppComponent implements OnInit {
     this.servidorEditandoId = null;
   }
 
+  // --- Exportação Personalizada para CSV ---
+  exportarCSV(): void {
+    if (!this.servidores || this.servidores.length === 0) {
+      this.mostrarToast('warn', 'Atenção', 'Não há dados para exportar');
+      return;
+    }
+
+    const cabecalhos = ['ID', 'Nome', 'E-mail', 'Data Nascimento', 'Secretaria', 'Sigla'];
+    
+    const linhas = this.servidores.map(s => [
+      s.id,
+      `"${s.nome || ''}"`,
+      `"${s.email || ''}"`,
+      `"${s.dataNascimento || ''}"`,
+      `"${s.secretaria?.nome || ''}"`,
+      `"${s.secretaria?.sigla || ''}"`
+    ]);
+
+    const conteudoCSV = '\uFEFF' + [cabecalhos.join(';'), ...linhas.map(l => l.join(';'))].join('\n');
+    
+    const blob = new Blob([conteudoCSV], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `servidores_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   // --- Ações de Secretarias ---
   salvarSecretaria(): void {
     if (this.secretariaForm.invalid) {
