@@ -5,12 +5,14 @@ Aplicação Fullstack desenvolvida como desafio técnico para a gestão e vincul
 ## 🚀 Tecnologias Utilizadas
 
 ### **Backend**
+
 - **Java 21**
 - **Spring Boot 3.x** (Spring Data JPA, Spring Validation, Spring Web)
 - **H2 Database** (Banco de dados em memória)
 - **Maven**
 
 ### **Frontend**
+
 - **Angular 19**
 - **PrimeNG 19** & **PrimeIcons**
 - **Reactive Forms**
@@ -32,21 +34,26 @@ Aplicação Fullstack desenvolvida como desafio técnico para a gestão e vincul
 ## ⚙️ Como Executar o Projeto
 
 ### **1. Backend (Spring Boot)**
+
 1. Certifique-se de ter o Java 21 e o Maven instalados.
 2. Navegue até a pasta do backend:
-   ```bash
-   cd backend
-   ```
+
+```bash
+cd backend
+```
+
 Execute a aplicação:
 
 ```bash
 mvn spring-boot:run
 ```
-A API estará disponível em http://localhost:8080.
 
-O console do H2 pode ser acessado em http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:servidoresdb, Usuário: sa, Senha em branco).
+A API estará disponível em [http://localhost:8080].
 
-2. Frontend (Angular)
+O console do H2 pode ser acessado em [http://localhost:8080/h2-console] (JDBC URL: jdbc:h2:mem:servidoresdb, Usuário: sa, Senha em branco).
+
+### **2. Frontend (Angular)**
+
 Certifique-se de ter o Node.js (v20+) instalado.
 
 Navegue até a pasta do frontend:
@@ -54,17 +61,20 @@ Navegue até a pasta do frontend:
 ```bash
 cd frontend
 ```
+
 Instale as dependências:
 
 ```bash
 npm install
 ```
+
 Execute o servidor de desenvolvimento:
 
 ```bash
 ng serve
 ```
-Acesse a aplicação no navegador em http://localhost:4200.
+
+Acesse a aplicação no navegador em [http://localhost:4200].
 
 ✒️ Autor
 Desenvolvido por Bruno Yoshioka.
