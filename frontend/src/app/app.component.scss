@@ -20,7 +20,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
-  align-items: end;
+  align-items: start; // Alterado para alinhar no topo e acomodar as mensagens de erro
 }
 
 .field {
@@ -32,6 +32,21 @@
     font-weight: 600;
     color: #495057;
   }
+}
+
+/* Mensagens de Erro em Vermelho Destacado */
+.error-message {
+  color: #e74c3c !important;
+  font-size: 0.825rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  display: block;
+}
+
+/* Bordas em vermelho nos inputs inválidos e tocados */
+.ng-invalid.ng-touched {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 0.15rem rgba(231, 76, 60, 0.25) !important;
 }
 
 .form-actions {

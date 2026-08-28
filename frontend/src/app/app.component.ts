@@ -88,7 +88,14 @@ export class AppComponent implements OnInit {
   salvarServidor(): void {
     if (this.servidorForm.invalid) {
       this.servidorForm.markAllAsTouched();
-      this.mostrarToast('warn', 'Atenção', 'Preencha os campos corretamente (idade entre 18 e 75 anos)');
+
+      const dataNascControl = this.servidorForm.get('dataNascimento');
+      
+      if (dataNascControl?.hasError('idadeInvalida')) {
+        this.mostrarToast('warn', 'Atenção', 'A idade do servidor deve ser entre 18 e 75 anos.');
+      } else {
+        this.mostrarToast('warn', 'Atenção', 'Por favor, preencha todos os campos obrigatórios.');
+      }
       return;
     }
 
@@ -101,7 +108,10 @@ export class AppComponent implements OnInit {
           this.resetarServidorForm();
           this.carregarDados();
         },
-        error: (err) => this.mostrarToast('error', 'Erro', err.error?.mensagem || 'Erro ao atualizar')
+        error: (err) => {
+          const mensagem = err.error?.erro || err.error?.mensagem || 'Erro ao atualizar servidor.';
+          this.mostrarToast('error', 'Erro ao atualizar', mensagem);
+        }
       });
     } else {
       this.servidorService.salvar(payload).subscribe({
@@ -110,7 +120,10 @@ export class AppComponent implements OnInit {
           this.resetarServidorForm();
           this.carregarDados();
         },
-        error: (err) => this.mostrarToast('error', 'Erro', err.error?.mensagem || 'Erro ao cadastrar')
+        error: (err) => {
+          const mensagem = err.error?.erro || err.error?.mensagem || 'Erro ao cadastrar servidor.';
+          this.mostrarToast('error', 'Erro ao cadastrar', mensagem);
+        }
       });
     }
   }

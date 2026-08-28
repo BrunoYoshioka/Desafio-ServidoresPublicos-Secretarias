@@ -21,7 +21,7 @@
           <div class="field">
             <label for="nome">Nome Completo</label>
             <input pInputText id="nome" formControlName="nome" placeholder="Digite o nome" />
-            <small class="p-error" *ngIf="servidorForm.get('nome')?.touched && servidorForm.get('nome')?.invalid">
+            <small class="error-message" *ngIf="servidorForm.get('nome')?.touched && servidorForm.get('nome')?.invalid">
               Nome é obrigatório (mínimo 3 caracteres).
             </small>
           </div>
@@ -29,7 +29,7 @@
           <div class="field">
             <label for="email">E-mail</label>
             <input pInputText id="email" type="email" formControlName="email" placeholder="email@dominio.com" />
-            <small class="p-error" *ngIf="servidorForm.get('email')?.touched && servidorForm.get('email')?.invalid">
+            <small class="error-message" *ngIf="servidorForm.get('email')?.touched && servidorForm.get('email')?.invalid">
               Informe um e-mail válido.
             </small>
           </div>
@@ -37,7 +37,7 @@
           <div class="field">
             <label for="dataNascimento">Data de Nascimento</label>
             <input pInputText type="date" id="dataNascimento" formControlName="dataNascimento" />
-            <small class="p-error" *ngIf="servidorForm.get('dataNascimento')?.touched && servidorForm.get('dataNascimento')?.hasError('idadeInvalida')">
+            <small class="error-message" *ngIf="servidorForm.get('dataNascimento')?.touched && servidorForm.get('dataNascimento')?.invalid">
               A idade do servidor deve ser entre 18 e 75 anos.
             </small>
           </div>
@@ -52,7 +52,7 @@
               placeholder="Selecione uma secretaria"
               [showClear]="true">
             </p-select>
-            <small class="p-error" *ngIf="servidorForm.get('secretariaId')?.touched && servidorForm.get('secretariaId')?.invalid">
+            <small class="error-message" *ngIf="servidorForm.get('secretariaId')?.touched && servidorForm.get('secretariaId')?.invalid">
               A secretaria é obrigatória.
             </small>
           </div>
@@ -109,11 +109,17 @@
           <div class="field">
             <label for="secNome">Nome da Secretaria</label>
             <input pInputText id="secNome" formControlName="nome" placeholder="Ex: Secretaria de Saúde" />
+            <small class="error-message" *ngIf="secretariaForm.get('nome')?.touched && secretariaForm.get('nome')?.invalid">
+              Nome é obrigatório (mínimo 3 caracteres).
+            </small>
           </div>
 
           <div class="field">
             <label for="secSigla">Sigla</label>
             <input pInputText id="secSigla" formControlName="sigla" placeholder="Ex: SES" />
+            <small class="error-message" *ngIf="secretariaForm.get('sigla')?.touched && secretariaForm.get('sigla')?.invalid">
+              Sigla é obrigatória (máximo 10 caracteres).
+            </small>
           </div>
 
           <div class="form-actions">
