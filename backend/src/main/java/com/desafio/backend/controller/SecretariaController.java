@@ -1,5 +1,6 @@
 package com.desafio.backend.controller;
 
+import com.desafio.backend.dto.SecretariaRequestDTO;
 import com.desafio.backend.model.Secretaria;
 import com.desafio.backend.service.SecretariaService;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,13 @@ public class SecretariaController {
     }
 
     @PostMapping
-    public ResponseEntity<Secretaria> criar(@Valid @RequestBody Secretaria secretaria) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(secretaria));
+    public ResponseEntity<Secretaria> criar(@Valid @RequestBody SecretariaRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Secretaria> atualizar(@PathVariable Long id, @Valid @RequestBody Secretaria secretaria) {
-        return ResponseEntity.ok(service.atualizar(id, secretaria));
+    public ResponseEntity<Secretaria> atualizar(@PathVariable Long id, @Valid @RequestBody SecretariaRequestDTO dto) {
+        return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")

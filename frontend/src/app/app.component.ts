@@ -196,6 +196,22 @@ export class AppComponent implements OnInit {
 
     const payload: Secretaria = this.secretariaForm.value;
 
+    // Validação defensiva de unicidade para Nome e Sigla (case-insensitive)
+    const secretariaDuplicada = this.secretarias.some(s => {
+      const mesmoNome = s.nome.trim().toLowerCase() === payload.nome.trim().toLowerCase();
+      const mesmaSigla = s.sigla.trim().toLowerCase() === payload.sigla.trim().toLowerCase();
+      
+      // Ao editar, ignoramos a própria secretaria que está sendo atualizada
+      const ehOutraSecretaria = s.id !== this.secretariaEditandoId;
+
+      return (mesmoNome || mesmaSigla) && ehOutraSecretaria;
+    });
+
+    if (secretariaDuplicada) {
+      this.mostrarToast('warn', 'Atenção', 'Já existe uma Secretaria registrada com este mesmo Nome ou Sigla.');
+      return;
+    }
+
     if (this.secretariaEditandoId) {
       this.secretariaService.atualizar(this.secretariaEditandoId, payload).subscribe({
         next: () => {
@@ -203,7 +219,10 @@ export class AppComponent implements OnInit {
           this.resetarSecretariaForm();
           this.carregarDados();
         },
-        error: () => this.mostrarToast('error', 'Erro', 'Erro ao atualizar secretaria')
+        error: (err) => {
+          const mensagem = err.error?.erro || err.error?.mensagem || 'Erro ao atualizar secretaria.';
+          this.mostrarToast('error', 'Erro ao atualizar', mensagem);
+        }
       });
     } else {
       this.secretariaService.salvar(payload).subscribe({
@@ -212,7 +231,10 @@ export class AppComponent implements OnInit {
           this.resetarSecretariaForm();
           this.carregarDados();
         },
-        error: () => this.mostrarToast('error', 'Erro', 'Erro ao cadastrar secretaria')
+        error: (err) => {
+          const mensagem = err.error?.erro || err.error?.mensagem || 'Erro ao cadastrar secretaria.';
+          this.mostrarToast('error', 'Erro ao cadastrar', mensagem);
+        }
       });
     }
   }
