@@ -4,7 +4,9 @@ import com.desafio.backend.dto.ServidorRequestDTO;
 import com.desafio.backend.model.Secretaria;
 import com.desafio.backend.model.Servidor;
 import com.desafio.backend.repository.ServidorRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -29,11 +31,17 @@ public class ServidorServiceImpl implements ServidorService {
     @Override
     public Servidor salvar(ServidorRequestDTO dto) {
         validarIdade(dto.getDataNascimento());
+
+        // Validação defensiva de unicidade do e-mail ao criar
+        if (servidorRepository.existsByEmailIgnoreCase(dto.getEmail().trim())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um servidor cadastrado com este e-mail.");
+        }
+
         Secretaria secretaria = secretariaService.buscarPorId(dto.getSecretariaId());
 
         Servidor servidor = new Servidor();
-        servidor.setNome(dto.getNome());
-        servidor.setEmail(dto.getEmail());
+        servidor.setNome(dto.getNome().trim());
+        servidor.setEmail(dto.getEmail().trim());
         servidor.setDataNascimento(dto.getDataNascimento());
         servidor.setSecretaria(secretaria);
 
@@ -43,13 +51,19 @@ public class ServidorServiceImpl implements ServidorService {
     @Override
     public Servidor atualizar(Long id, ServidorRequestDTO dto) {
         validarIdade(dto.getDataNascimento());
+
         Servidor servidorExistente = servidorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Servidor não encontrado com ID: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Servidor não encontrado com ID: " + id));
+
+        // Validação defensiva de unicidade do e-mail ao atualizar (ignorando o próprio ID)
+        if (servidorRepository.existsByEmailIgnoreCaseAndIdNot(dto.getEmail().trim(), id)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe outro servidor cadastrado com este e-mail.");
+        }
 
         Secretaria secretaria = secretariaService.buscarPorId(dto.getSecretariaId());
 
-        servidorExistente.setNome(dto.getNome());
-        servidorExistente.setEmail(dto.getEmail());
+        servidorExistente.setNome(dto.getNome().trim());
+        servidorExistente.setEmail(dto.getEmail().trim());
         servidorExistente.setDataNascimento(dto.getDataNascimento());
         servidorExistente.setSecretaria(secretaria);
 
@@ -59,7 +73,7 @@ public class ServidorServiceImpl implements ServidorService {
     @Override
     public void deletar(Long id) {
         if (!servidorRepository.existsById(id)) {
-            throw new RuntimeException("Servidor não encontrado com ID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Servidor não encontrado com ID: " + id);
         }
         servidorRepository.deleteById(id);
     }

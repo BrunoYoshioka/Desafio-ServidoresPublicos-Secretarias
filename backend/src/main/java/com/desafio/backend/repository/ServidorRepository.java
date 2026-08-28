@@ -4,4 +4,7 @@ import com.desafio.backend.model.Servidor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ServidorRepository extends JpaRepository<Servidor, Long> {
+    boolean existsByEmailIgnoreCase(String email);
+
+    boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
 }
