@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Servidor } from '../models/servidor.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServidorService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/servidores';
+  private readonly apiUrl = `${environment.apiUrl}/servidores`;
 
   listar(): Observable<Servidor[]> {
     return this.http.get<Servidor[]>(this.apiUrl);

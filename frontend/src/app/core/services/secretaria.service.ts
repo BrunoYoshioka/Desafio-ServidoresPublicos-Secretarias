@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Secretaria } from '../models/secretaria.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SecretariaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/secretarias';
+  private readonly apiUrl = `${environment.apiUrl}/secretarias`;
 
   listar(): Observable<Secretaria[]> {
     return this.http.get<Secretaria[]>(this.apiUrl);

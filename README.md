@@ -30,7 +30,7 @@ Aplicação Fullstack desenvolvida como desafio técnico para a gestão e vincul
   - **Validação de Idade:** Permitida a idade do Servidor apenas entre 18 e 75 anos.
   - **Unicidade de E-mail (Servidores):** Garantida no Backend via Service e restrição `@Column(unique = true)` para permitir múltiplos vínculos com o mesmo nome.
   - **Unicidade de Nome e Sigla (Secretarias):** Trava defensiva preventiva no Frontend (UX instantânea) e no Backend (`existsBy...` no Service/Repository) prevenindo registros duplicados.
-- **Diferenciais:** 
+- **Diferenciais:**
   - Exportação da listagem de Servidores Públicos para arquivo CSV.
   - Interface responsiva com feedback visual dinâmico em formulários (tratamento do estado `touched` e destaque de campos inválidos).
 
@@ -53,9 +53,9 @@ Execute a aplicação:
 mvn spring-boot:run
 ```
 
-A API estará disponível em [http://localhost:8080].
+A API estará disponível em `http://localhost:8080`.
 
-O console do H2 pode ser acessado em [http://localhost:8080/h2-console] (JDBC URL: jdbc:h2:mem:servidoresdb, Usuário: sa, Senha em branco).
+O console do H2 pode ser acessado em `http://localhost:8080/h2-console` (JDBC URL: jdbc:h2:mem:servidoresdb, Usuário: sa, Senha em branco).
 
 ### **2. Frontend (Angular)**
 
@@ -79,7 +79,9 @@ Execute o servidor de desenvolvimento:
 ng serve
 ```
 
-Acesse a aplicação no navegador em [http://localhost:4200].
+Acesse a aplicação no navegador em `http://localhost:4200`.
+
+Para mais detalhes sobre o desenvolvimento, arquitetura, configurações e instalação sobre a aplicação frontend angular, acesse a [Documentação Frontend](https://github.com/BrunoYoshioka/Desafio-ServidoresPublicos-Secretarias/blob/main/frontend/README.md)
 
 ✒️ Autor
 Desenvolvido por Bruno Yoshioka.
