@@ -22,12 +22,17 @@ Aplicação Fullstack desenvolvida como desafio técnico para a gestão e vincul
 
 ## 🛠️ Arquitetura e Padrões Aplicados
 
-- **Arquitetura em Camadas (Monorepo):** Separação clara entre `/backend` e `/frontend`.
-- **Princípios SOLID:** Baixo acoplamento e inversão de dependência em serviços REST e componentes.
-- **Validações de Regra de Negócio:**
-  - Validador customizado de idade para Servidores (permitido apenas entre 18 e 75 anos).
-  - Tratamento de exceções e integridade referencial ao excluir Secretarias vinculadas.
-- **Diferenciais:** Exportação da listagem de Servidores para arquivo CSV via PrimeNG Table.
+- **Arquitetura em Camadas:** Separação clara entre `/backend` (REST API) e `/frontend` (Single Page Application).
+- **Padrão DTO (Data Transfer Object):** Utilização de `ServidorRequestDTO` e `SecretariaRequestDTO` desacoplando a camada de apresentação da camada de persistência.
+- **Princípios SOLID & Clean Architecture:** Inversão de dependência através de interfaces de serviço (`ServidorService` e `SecretariaService`).
+- **Tratamento Global de Exceções:** Centralizado via `@RestControllerAdvice` (`GlobalExceptionHandler`), garantindo retornos HTTP semânticos (`400 Bad Request`, `404 Not Found`, `409 Conflict`).
+- **Defesa em Profundidade (Validações de Regra de Negócio):**
+  - **Validação de Idade:** Permitida a idade do Servidor apenas entre 18 e 75 anos.
+  - **Unicidade de E-mail (Servidores):** Garantida no Backend via Service e restrição `@Column(unique = true)` para permitir múltiplos vínculos com o mesmo nome.
+  - **Unicidade de Nome e Sigla (Secretarias):** Trava defensiva preventiva no Frontend (UX instantânea) e no Backend (`existsBy...` no Service/Repository) prevenindo registros duplicados.
+- **Diferenciais:** 
+  - Exportação da listagem de Servidores Públicos para arquivo CSV.
+  - Interface responsiva com feedback visual dinâmico em formulários (tratamento do estado `touched` e destaque de campos inválidos).
 
 ---
 
